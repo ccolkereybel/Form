@@ -2,12 +2,15 @@
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
+import phone from "@/components/phone"
+import PhoneCallButton from "@/components/phone";
 
 export default function HomeScreen() {
   return (
     <>
     <SafeAreaView>
       <MyForm />
+      <PhoneCallButton/>
       </SafeAreaView>
     </>
   );
