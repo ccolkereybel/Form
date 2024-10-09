@@ -1,7 +1,6 @@
 // formresults.js
 import React, { useState } from "react";
 import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "react-native";
-import DraggableFlatList from "react-native-draggable-flatlist";
 import { useFormData } from "@/components/FormDataContext.js";
 
 function MyResults() {
@@ -27,71 +26,48 @@ function MyResults() {
     setIsEditing(null); // Exit editing mode
   };
 
-  // Function to handle drag-and-drop
-  const handleDragEnd = ({ data }) => {
-    setSubmittedData(data); // Update the list order after drag ends
-  };
-
-  const renderItem = ({ item, index, drag }) => {
-    return (
-      <TouchableOpacity
-        onLongPress={drag} // Trigger drag on long press
-        style={styles.entryContainer}
-      >
-        {isEditing === index ? (
-          <>
-            <TextInput
-              style={styles.input}
-              value={formData.name}
-              onChangeText={(text) => setFormData({ ...formData, name: text })}
-              placeholder="Edit Name"
-            />
-            <TextInput
-              style={styles.input}
-              value={formData.email}
-              onChangeText={(text) => setFormData({ ...formData, email: text })}
-              placeholder="Edit Email"
-            />
-            <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
-              <Text style={styles.buttonText}>Save</Text>
-            </TouchableOpacity>
-          </>
-        ) : (
-          <>
-            <Text>Name: {item.name}</Text>
-            <Text>Email: {item.email}</Text>
-            <View style={styles.buttonContainer}>
-              <TouchableOpacity
-                style={styles.editButton}
-                onPress={() => handleEdit(index)}
-              >
-                <Text style={styles.buttonText}>Edit</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                style={styles.deleteButton}
-                onPress={() => handleDelete(index)}
-              >
-                <Text style={styles.buttonText}>Delete</Text>
-              </TouchableOpacity>
-            </View>
-          </>
-        )}
-      </TouchableOpacity>
-    );
-  };
-
   return (
     <View style={styles.submittedContainer}>
       <Text style={styles.submittedTitle}>Submitted Data:</Text>
       {submittedData.length === 0 ? (
         <Text>No data submitted yet.</Text>
       ) : (
-        <DraggableFlatList
-          data={submittedData}
-          renderItem={renderItem}
-          keyExtractor={(item, index) => `draggable-item-${index}`} // Unique key for items
-          onDragEnd={handleDragEnd}
-        />
+        submittedData.map((entry, index) => (
+          <View key={index} style={styles.entryContainer}>
+            {isEditing === index ? (
+              <>
+                <TextInput
+                  style={styles.input}
+                  value={formData.name}
+                  onChangeText={(text) => setFormData({ ...formData, name: text })}
+                  placeholder="Edit Name"
+                />
+                <TextInput
+                  style={styles.input}
+                  value={formData.email}
+                  onChangeText={(text) => setFormData({ ...formData, email: text })}
+                  placeholder="Edit Email"
+                />
+                <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                  <Text style={styles.buttonText}>Save</Text>
+                </TouchableOpacity>
+              </>
+            ) : (
+              <>
+                <Text>Name: {entry.name}</Text>
+                <Text>Email: {entry.email}</Text>
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity style={styles.editButton} onPress={() => handleEdit(index)}>
+                    <Text style={styles.buttonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(index)}>
+                    <Text style={styles.buttonText}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
+              </>
+            )}
+          </View>
+        ))
       )}
     </View>
   );
