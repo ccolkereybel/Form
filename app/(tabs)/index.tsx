@@ -1,26 +1,33 @@
+// index.tsx
 import React from "react";
-import { StyleSheet, SafeAreaView, View, TouchableWithoutFeedback, Keyboard } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
 
 export default function HomeScreen() {
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
-      <SafeAreaView style={styles.container}>
-        <View style={styles.inner}>
-          <MyForm />
-        </View>
+    <>
+    <SafeAreaView>
+      <MyForm />
       </SafeAreaView>
-    </TouchableWithoutFeedback>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
+  titleContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 8,
   },
-  inner: {
-    flex: 1,
-    justifyContent: "center",
-    padding: 20,
+  stepContainer: {
+    gap: 8,
+    marginBottom: 8,
+  },
+  reactLogo: {
+    height: 178,
+    width: 290,
+    bottom: 0,
+    left: 0,
+    position: "absolute",
   },
 });
