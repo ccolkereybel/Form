@@ -20,8 +20,14 @@ function MyForm() {
     <View style={styles.container}>
       <Controller
         control={control}
-        render={({ field }) => (
-          <TextInput {...field} style={styles.input} placeholder="Your Name" />
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            style={styles.input}
+            placeholder="Your Name"
+          />
         )}
         name="name"
         defaultValue=""
@@ -33,8 +39,14 @@ function MyForm() {
 
       <Controller
         control={control}
-        render={({ field }) => (
-          <TextInput {...field} style={styles.input} placeholder="Email" />
+        render={({ field: { onChange, onBlur, value } }) => (
+          <TextInput
+            onBlur={onBlur}
+            onChangeText={onChange}
+            value={value}
+            style={styles.input}
+            placeholder="Email"
+          />
         )}
         name="email"
         defaultValue=""

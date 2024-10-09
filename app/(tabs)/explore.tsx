@@ -1,12 +1,14 @@
 // explore.tsx
 import React from "react";
-import { StyleSheet } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import MyResults from "@/components/formresults"; // Adjust the path
 
 export default function ExploreScreen() {
   return (
     <>
+    <SafeAreaView>
       <MyResults />
+      </SafeAreaView>
     </>
   );
 }
