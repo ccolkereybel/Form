@@ -1,7 +1,6 @@
-// form.js
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 
 function MyForm() {
@@ -17,53 +16,56 @@ function MyForm() {
   };
 
   return (
-    <View style={styles.container}>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            style={styles.input}
-            placeholder="Your Name"
-          />
+    // Wrap the form with TouchableWithoutFeedback to dismiss keyboard
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+      <View style={styles.container}>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={styles.input}
+              placeholder="Your Name"
+            />
+          )}
+          name="name"
+          defaultValue=""
+          rules={{ required: "You must enter your name" }}
+        />
+        {errors.name && (
+          <Text style={styles.errorText}>{errors.name.message}</Text>
         )}
-        name="name"
-        defaultValue=""
-        rules={{ required: "You must enter your name" }}
-      />
-      {errors.name && (
-        <Text style={styles.errorText}>{errors.name.message}</Text>
-      )}
 
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            style={styles.input}
-            placeholder="Email"
-          />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={styles.input}
+              placeholder="Email"
+            />
+          )}
+          name="email"
+          defaultValue=""
+          rules={{
+            required: "You must enter your email",
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "Enter a valid email address",
+            },
+          }}
+        />
+        {errors.email && (
+          <Text style={styles.errorText}>{errors.email.message}</Text>
         )}
-        name="email"
-        defaultValue=""
-        rules={{
-          required: "You must enter your email",
-          pattern: {
-            value: /^\S+@\S+$/i,
-            message: "Enter a valid email address",
-          },
-        }}
-      />
-      {errors.email && (
-        <Text style={styles.errorText}>{errors.email.message}</Text>
-      )}
 
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
-    </View>
+        <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+      </View>
+    </TouchableWithoutFeedback>
   );
 }
 
