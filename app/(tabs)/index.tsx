@@ -2,8 +2,8 @@
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
-import phone from "@/components/phone"
 import PhoneCallButton from "@/components/phone";
+import TextMessageButton from "@/components/texting"
 
 export default function HomeScreen() {
   return (
@@ -11,6 +11,7 @@ export default function HomeScreen() {
     <SafeAreaView>
       <MyForm />
       <PhoneCallButton/>
+      <TextMessageButton/>
       </SafeAreaView>
     </>
   );
