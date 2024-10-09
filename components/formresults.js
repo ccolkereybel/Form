@@ -1,8 +1,7 @@
 // formresults.js
 import React, { useState } from "react";
-import { View, Text, Button, StyleSheet, TextInput } from "react-native";
+import { View, Text, Button, StyleSheet, TextInput, TouchableOpacity } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
-import MyForm from "@/components/form";
 
 function MyResults() {
   const { submittedData, setSubmittedData } = useFormData(); // Access context
@@ -49,14 +48,22 @@ function MyResults() {
                   onChangeText={(text) => setFormData({ ...formData, email: text })}
                   placeholder="Edit Email"
                 />
-                <Button title="Save" onPress={handleSave} />
+                <TouchableOpacity style={styles.saveButton} onPress={handleSave}>
+                  <Text style={styles.buttonText}>Save</Text>
+                </TouchableOpacity>
               </>
             ) : (
               <>
                 <Text>Name: {entry.name}</Text>
                 <Text>Email: {entry.email}</Text>
-                <Button title="Edit" onPress={() => handleEdit(index)} />
-                <Button title="Delete" onPress={() => handleDelete(index)} />
+                <View style={styles.buttonContainer}>
+                  <TouchableOpacity style={styles.editButton} onPress={() => handleEdit(index)}>
+                    <Text style={styles.buttonText}>Edit</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.deleteButton} onPress={() => handleDelete(index)}>
+                    <Text style={styles.buttonText}>Delete</Text>
+                  </TouchableOpacity>
+                </View>
               </>
             )}
           </View>
@@ -73,20 +80,54 @@ const styles = StyleSheet.create({
   submittedTitle: {
     fontSize: 20,
     marginBottom: 10,
+    fontWeight: "bold",
   },
   entryContainer: {
     marginBottom: 20,
-    padding: 10,
+    padding: 15,
     borderWidth: 1,
     borderColor: "gray",
+    borderRadius: 8,
+    backgroundColor: "#f9f9f9",
   },
   input: {
     borderWidth: 1,
     borderColor: "gray",
     padding: 10,
     marginBottom: 10,
+    borderRadius: 8,
+    backgroundColor: "#fff",
+  },
+  buttonContainer: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    marginTop: 10,
+  },
+  editButton: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    marginRight: 10,
+  },
+  deleteButton: {
+    backgroundColor: "#f44336",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+  },
+  saveButton: {
+    backgroundColor: "#2196F3",
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 5,
+    alignSelf: "flex-start",
+  },
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+    textAlign: "center",
   },
 });
 
 export default MyResults;
-
