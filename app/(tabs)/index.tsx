@@ -2,16 +2,13 @@
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
-import PhoneCallButton from "@/components/phone";
-import TextMessageButton from "@/components/texting"
+
 
 export default function HomeScreen() {
   return (
     <>
     <SafeAreaView>
       <MyForm />
-      <PhoneCallButton/>
-      <TextMessageButton/>
       </SafeAreaView>
     </>
   );

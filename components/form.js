@@ -61,8 +61,9 @@ function MyForm() {
       {errors.email && (
         <Text style={styles.errorText}>{errors.email.message}</Text>
       )}
-
-      <Button title="Submit" onPress={handleSubmit(onSubmit)} />
+  <View style={styles.buttonContainer}>
+      <Button  title="Submit" onPress={handleSubmit(onSubmit)} color="#004f71"/>
+      </View>
     </View>
   );
 }
@@ -80,6 +81,10 @@ const styles = StyleSheet.create({
   errorText: {
     color: "red",
   },
+
+  buttonContainer: {
+    color: "green"
+  }
 });
 
 export default MyForm;
