@@ -65,10 +65,21 @@ function MyForm() {
       {errors.email && (
         <Text style={styles.errorText}>{errors.email.message}</Text>
       )}
-      <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>
+      <Pressable
+        onPress={handleSubmit(onSubmit)}
+        style={({pressed}) => [
+          {
+            backgroundColor: pressed ? '#516067' : "#004f71",
+            paddingVertical: 12,
+            alignItems: "center",
+            justifyContent: 'center',
+            paddingVertical: 12,
+            paddingHorizontal: 32,
+            borderRadius: 4,
+            elevation: 3,
+          }]}>
       <Text style={styles.text}>Submit</Text>
     </Pressable>
-
     </View>
   );
 }
@@ -85,15 +96,6 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
-  },
-  button: {
-    alignItems: 'center',
-    justifyContent: 'center',
-    paddingVertical: 12,
-    paddingHorizontal: 32,
-    borderRadius: 4,
-    elevation: 3,
-    backgroundColor: "#004f71",
   },
   text: {
     fontSize: 16,
