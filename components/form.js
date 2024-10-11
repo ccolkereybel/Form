@@ -1,7 +1,7 @@
 // form.js
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, Button, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, Pressable, StyleSheet, Image } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import logo from "@/assets/images/logo.jpg";
 
@@ -65,7 +65,9 @@ function MyForm() {
       {errors.email && (
         <Text style={styles.errorText}>{errors.email.message}</Text>
       )}
-      <Button  title="Submit" onPress={handleSubmit(onSubmit)} color="#004f71"/>
+      <Pressable style={styles.button} onPress={handleSubmit(onSubmit)}>
+      <Text style={styles.text}>Submit</Text>
+    </Pressable>
 
     </View>
   );
@@ -83,6 +85,22 @@ const styles = StyleSheet.create({
   },
   errorText: {
     color: "red",
+  },
+  button: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+    backgroundColor: "#004f71",
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: 'bold',
+    letterSpacing: 0.25,
+    color: 'white',
   },
 
 
