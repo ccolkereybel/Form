@@ -1,7 +1,7 @@
 // form.js
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, Pressable, StyleSheet, Image, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import logo from "@/assets/images/logo.jpg";
 
@@ -66,23 +66,9 @@ function MyForm() {
       {errors.email && (
         <Text style={styles.errorText}>{errors.email.message}</Text>
       )}
-      
-      <Pressable
-        onPress={handleSubmit(onSubmit)}
-        style={({pressed}) => [
-          {
-            backgroundColor: pressed ? '#516067' : "#004f71",
-            paddingVertical: 12,
-            alignItems: "center",
-            justifyContent: 'center',
-            paddingVertical: 12,
-            paddingHorizontal: 32,
-            borderRadius: 4,
-            elevation: 3,
-          }]}>
-           
+      <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>  
       <Text style={styles.text}>Submit</Text>
-    </Pressable>
+      </TouchableOpacity>
     <View style={styles.extraSpace} />
     </View>
     </TouchableWithoutFeedback>
@@ -113,6 +99,17 @@ const styles = StyleSheet.create({
   extraSpace: {
     height: 200, 
   },
+  button: {
+    backgroundColor: "#004f71",
+    paddingVertical: 12,
+    alignItems: "center",
+    justifyContent: 'center',
+    paddingVertical: 12,
+    paddingHorizontal: 32,
+    borderRadius: 4,
+    elevation: 3,
+
+  }
 
 });
 
