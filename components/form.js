@@ -1,8 +1,9 @@
 // form.js
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, Button, StyleSheet } from "react-native";
+import { View, Text, TextInput, Button, StyleSheet, Image } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
+import logo from "@/assets/images/logo.jpg";
 
 function MyForm() {
   const { setSubmittedData } = useFormData();
@@ -18,6 +19,9 @@ function MyForm() {
 
   return (
     <View style={styles.container}>
+      <View>
+        <Image source={logo}/>
+      </View>
       <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -61,9 +65,8 @@ function MyForm() {
       {errors.email && (
         <Text style={styles.errorText}>{errors.email.message}</Text>
       )}
-  <View style={styles.buttonContainer}>
       <Button  title="Submit" onPress={handleSubmit(onSubmit)} color="#004f71"/>
-      </View>
+
     </View>
   );
 }
@@ -82,9 +85,7 @@ const styles = StyleSheet.create({
     color: "red",
   },
 
-  buttonContainer: {
-    color: "green"
-  }
+
 });
 
 export default MyForm;
