@@ -1,7 +1,7 @@
 // form.js
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, Pressable, StyleSheet, Image } from "react-native";
+import { View, Text, TextInput, Pressable, StyleSheet, Image, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import logo from "@/assets/images/logo.jpg";
 
@@ -18,11 +18,12 @@ function MyForm() {
   };
 
   return (
-    <View style={styles.container}>
-      <View>
-        <Image source={logo}/>
-      </View>
-      <Controller
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+      <View style={styles.container}>
+        <View>
+          <Image source={logo}/>
+        </View>
+        <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
           <TextInput
@@ -65,6 +66,7 @@ function MyForm() {
       {errors.email && (
         <Text style={styles.errorText}>{errors.email.message}</Text>
       )}
+      
       <Pressable
         onPress={handleSubmit(onSubmit)}
         style={({pressed}) => [
@@ -78,9 +80,13 @@ function MyForm() {
             borderRadius: 4,
             elevation: 3,
           }]}>
+           
       <Text style={styles.text}>Submit</Text>
     </Pressable>
+    <View style={styles.extraSpace} />
     </View>
+    </TouchableWithoutFeedback>
+    
   );
 }
 
@@ -104,7 +110,9 @@ const styles = StyleSheet.create({
     letterSpacing: 0.25,
     color: 'white',
   },
-
+  extraSpace: {
+    height: 200, 
+  },
 
 });
 

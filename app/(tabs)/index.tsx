@@ -1,6 +1,6 @@
 // index.tsx
 import React from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, TouchableWithoutFeedback, Keyboard } from "react-native";
 import MyForm from "@/components/form";
 
 
