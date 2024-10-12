@@ -18,7 +18,7 @@ function MyForm() {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
+    
       <View style={styles.container}>
         <View>
           <Image source={logo}/>
@@ -69,9 +69,9 @@ function MyForm() {
       <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>  
       <Text style={styles.text}>Submit</Text>
       </TouchableOpacity>
-    <View style={styles.extraSpace} />
+ 
     </View>
-    </TouchableWithoutFeedback>
+   
     
   );
 }
