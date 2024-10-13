@@ -1,11 +1,12 @@
 // form.js
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, Keyboard, TouchableWithoutFeedback } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, useColorScheme } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import logo from "@/assets/images/logo.jpg";
 
 function MyForm() {
+  const colorScheme = useColorScheme ();
   const { setSubmittedData } = useFormData();
   const {
     control,
@@ -17,9 +18,22 @@ function MyForm() {
     setSubmittedData((prevData) => [...prevData, data]);
   };
 
+  const dynamicStyles = StyleSheet.create({
+  input: {
+    borderWidth: 1,
+    borderColor: "gray",
+    padding: 10,
+    marginBottom: 10,
+    backgroundColor: colorScheme === 'dark' ? '#222' : '#fff',
+    color: colorScheme === 'dark' ? '#fff' : '#000',
+  },
+
+});
+
+
   return (
     
-      <View style={styles.container}>
+      <View styles={staticStyles.container}>
         <View>
           <Image source={logo}/>
         </View>
@@ -30,7 +44,7 @@ function MyForm() {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            style={styles.input}
+            style={dynamicStyles.input}
             placeholder="Your Name"
           />
         )}
@@ -39,7 +53,7 @@ function MyForm() {
         rules={{ required: "You must enter your name" }}
       />
       {errors.name && (
-        <Text style={styles.errorText}>{errors.name.message}</Text>
+        <Text style={staticStyles.errorText}>{errors.name.message}</Text>
       )}
 
       <Controller
@@ -49,7 +63,7 @@ function MyForm() {
             onBlur={onBlur}
             onChangeText={onChange}
             value={value}
-            style={styles.input}
+            style={dynamicStyles.input}
             placeholder="Email"
           />
         )}
@@ -64,10 +78,10 @@ function MyForm() {
         }}
       />
       {errors.email && (
-        <Text style={styles.errorText}>{errors.email.message}</Text>
+        <Text style={staticStyles.errorText}>{errors.email.message}</Text>
       )}
-      <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>  
-      <Text style={styles.text}>Submit</Text>
+      <TouchableOpacity style={staticStyles.button} onPress={handleSubmit(onSubmit)}>  
+      <Text style={staticStyles.text}>Submit</Text>
       </TouchableOpacity>
  
     </View>
@@ -76,16 +90,11 @@ function MyForm() {
   );
 }
 
-const styles = StyleSheet.create({
+const staticStyles = StyleSheet.create({
   container: {
     padding: 20,
   },
-  input: {
-    borderWidth: 1,
-    borderColor: "gray",
-    padding: 10,
-    marginBottom: 10,
-  },
+
   errorText: {
     color: "red",
   },
