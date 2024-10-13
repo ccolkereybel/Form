@@ -13,23 +13,24 @@ function MyResults() {
   return (
     <View style={styles.submittedContainer}>
       <Text style={styles.submittedTitle}>Submitted Data:</Text>
+
       {submittedData.length === 0 ? (
         <Text>No data submitted yet.</Text>
       ) : (
         <DraggableFlatList
           data={submittedData}
           onDragEnd={handleDragEnd}
-          keyExtractor={(item, index) => `draggable-item-${index}`}
-          renderItem={({ item, index, drag, isActive }) => (
+          // Use a unique property for the key extractor, assuming items have a unique `id` property
+          keyExtractor={(item) => `${item.name}-${item.email}`} // Ensure the id is a string
+          renderItem={({ item, drag, isActive }) => (
             <TouchableOpacity
-              style={[
-                styles.entryContainer,
-                { opacity: isActive ? 0.5 : 1 },
-              ]}
+              style={[{ opacity: isActive ? 0.5 : 1 }]}
               onLongPress={drag} // Enable dragging on long press
             >
-              <Text>Name: {item.name}</Text>
-              <Text>Email: {item.email}</Text>
+              <View style={styles.item}>
+                <Text>Name: {item.name}</Text>
+                <Text>Email: {item.email}</Text>
+              </View>
             </TouchableOpacity>
           )}
         />
@@ -47,14 +48,25 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
   },
-  entryContainer: {
-    marginBottom: 20,
-    padding: 15,
-    borderWidth: 1,
-    borderColor: "gray",
-    borderRadius: 8,
-    backgroundColor: "#f9f9f9",
+  clearButton: {
+    backgroundColor: '#ff6666',
+    padding: 10,
+    borderRadius: 5,
+    marginBottom: 10,
+  },
+  buttonText: {
+    color: '#fff',
+    textAlign: 'center',
+    fontWeight: 'bold',
+  },
+  item: {
+    backgroundColor: '#f9c2ff',
+    padding: 20,
+    marginVertical: 8,
+    marginHorizontal: 16,
   },
 });
 
 export default MyResults;
+
+
