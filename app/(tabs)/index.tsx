@@ -2,16 +2,13 @@
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
-import {NavigationContainer, DarkTheme, DefaultTheme} from '@react-navigation/native';
 
 
 export default function HomeScreen() {
   return (
     <>
-    <SafeAreaView>
-      
+    <SafeAreaView> 
       <MyForm />
-     
       </SafeAreaView>
     </>
   );

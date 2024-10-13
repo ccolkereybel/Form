@@ -1,7 +1,7 @@
 // form.js
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, useColorScheme } from "react-native";
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, useColorScheme, Keyboard, TouchableWithoutFeedback } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import logo from "@/assets/images/logo.jpg";
 
@@ -32,11 +32,12 @@ function MyForm() {
 
 
   return (
-    
+    <TouchableWithoutFeedback onPress={Keyboard.dismiss} accessible={false}>
       <View styles={staticStyles.container}>
         <View>
           <Image source={logo}/>
         </View>
+      
         <Controller
         control={control}
         render={({ field: { onChange, onBlur, value } }) => (
@@ -52,6 +53,7 @@ function MyForm() {
         defaultValue=""
         rules={{ required: "You must enter your name" }}
       />
+     
       {errors.name && (
         <Text style={staticStyles.errorText}>{errors.name.message}</Text>
       )}
@@ -83,10 +85,9 @@ function MyForm() {
       <TouchableOpacity style={staticStyles.button} onPress={handleSubmit(onSubmit)}>  
       <Text style={staticStyles.text}>Submit</Text>
       </TouchableOpacity>
- 
-    </View>
-   
-    
+      <View style={staticStyles.extraSpace} />
+    </View>  
+    </TouchableWithoutFeedback>
   );
 }
 
