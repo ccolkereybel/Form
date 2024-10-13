@@ -1,32 +1,26 @@
 // explore.tsx
 import React from "react";
-import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
+import { StyleSheet, SafeAreaView } from "react-native";
 import MyResults from "@/components/formresults"; // Adjust the path
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 export default function ExploreScreen() {
   return (
-    <>
-    <GestureHandlerRootView style={{ flex: 1 }}>
-    <SafeAreaView>
-      <ScrollView>
-      <MyResults />
-      </ScrollView>
+    <GestureHandlerRootView style={styles.container}>
+      <SafeAreaView style={styles.safeArea}>
+        <MyResults />
       </SafeAreaView>
-      </GestureHandlerRootView>
-    </>
+    </GestureHandlerRootView>
   );
 }
 
 const styles = StyleSheet.create({
-  headerImage: {
-    color: "#808080",
-    bottom: -90,
-    left: -35,
-    position: "absolute",
+  container: {
+    flex: 1,
   },
-  titleContainer: {
-    flexDirection: "row",
-    gap: 8,
+  safeArea: {
+    flex: 1,
+    padding: 20,
   },
 });
+
