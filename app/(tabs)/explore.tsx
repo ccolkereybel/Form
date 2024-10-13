@@ -1,6 +1,6 @@
 // explore.tsx
 import React from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
+import { StyleSheet, SafeAreaView, ScrollView } from "react-native";
 import MyResults from "@/components/formresults"; // Adjust the path
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 
@@ -9,7 +9,9 @@ export default function ExploreScreen() {
     <>
     <GestureHandlerRootView style={{ flex: 1 }}>
     <SafeAreaView>
+      <ScrollView>
       <MyResults />
+      </ScrollView>
       </SafeAreaView>
       </GestureHandlerRootView>
     </>
