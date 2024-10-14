@@ -3,12 +3,11 @@ import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
 
-
 export default function HomeScreen() {
   return (
     <>
-    <SafeAreaView> 
-      <MyForm />
+      <SafeAreaView>
+        <MyForm />
       </SafeAreaView>
     </>
   );
