@@ -1,19 +1,19 @@
-// index.tsx
 import React from "react";
-import { StyleSheet, SafeAreaView } from "react-native";
-import MyForm from "@/components/form";
+import { SafeAreaView, StyleSheet } from "react-native";
+import MyForm from "@/components/form"; // Adjust the path as necessary
 
 export default function HomeScreen() {
   return (
-    <>
-      <SafeAreaView>
-        <MyForm />
-      </SafeAreaView>
-    </>
+    <SafeAreaView style={styles.container}>
+      <MyForm />
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1, // This allows the SafeAreaView to fill the screen
+  },
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",

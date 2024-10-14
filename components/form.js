@@ -8,6 +8,7 @@ import {
   StyleSheet,
   Image,
   useColorScheme,
+  SafeAreaView,
 } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import logo from "@/assets/images/logo.jpg";
@@ -29,68 +30,76 @@ function MyForm() {
   const dynamicStyles = colorScheme === "dark" ? darkStyles : lightStyles;
 
   return (
-    <View style={[styles.container, dynamicStyles.container]}>
-      <View>
-        <Image source={logo} style={styles.image} />
-      </View>
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            style={[styles.input, dynamicStyles.input]}
-            placeholder="Your Name"
-            placeholderTextColor={dynamicStyles.placeholder.color} // Change placeholder color based on theme
-          />
+    <SafeAreaView style={[styles.container, dynamicStyles.container]}>
+      <View style={styles.innerContainer}>
+        <View>
+          <Image source={logo} style={styles.image} />
+        </View>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={[styles.input, dynamicStyles.input]}
+              placeholder="Your Name"
+              placeholderTextColor={dynamicStyles.placeholder.color} // Change placeholder color based on theme
+            />
+          )}
+          name="name"
+          defaultValue=""
+          rules={{ required: "You must enter your name" }}
+        />
+        {errors.name && (
+          <Text style={dynamicStyles.errorText}>{errors.name.message}</Text>
         )}
-        name="name"
-        defaultValue=""
-        rules={{ required: "You must enter your name" }}
-      />
-      {errors.name && (
-        <Text style={dynamicStyles.errorText}>{errors.name.message}</Text>
-      )}
 
-      <Controller
-        control={control}
-        render={({ field: { onChange, onBlur, value } }) => (
-          <TextInput
-            onBlur={onBlur}
-            onChangeText={onChange}
-            value={value}
-            style={[styles.input, dynamicStyles.input]}
-            placeholder="Email"
-            placeholderTextColor={dynamicStyles.placeholder.color} // Change placeholder color based on theme
-          />
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={[styles.input, dynamicStyles.input]}
+              placeholder="Email"
+              placeholderTextColor={dynamicStyles.placeholder.color} // Change placeholder color based on theme
+            />
+          )}
+          name="email"
+          defaultValue=""
+          rules={{
+            required: "You must enter your email",
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "Enter a valid email address",
+            },
+          }}
+        />
+        {errors.email && (
+          <Text style={dynamicStyles.errorText}>{errors.email.message}</Text>
         )}
-        name="email"
-        defaultValue=""
-        rules={{
-          required: "You must enter your email",
-          pattern: {
-            value: /^\S+@\S+$/i,
-            message: "Enter a valid email address",
-          },
-        }}
-      />
-      {errors.email && (
-        <Text style={dynamicStyles.errorText}>{errors.email.message}</Text>
-      )}
-      <TouchableOpacity
-        style={[styles.button, dynamicStyles.button]}
-        onPress={handleSubmit(onSubmit)}
-      >
-        <Text style={dynamicStyles.text}>Submit</Text>
-      </TouchableOpacity>
-    </View>
+        <TouchableOpacity
+          style={[styles.button, dynamicStyles.button]}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text style={dynamicStyles.text}>Submit</Text>
+        </TouchableOpacity>
+      </View>
+    </SafeAreaView>
   );
 }
 
 // Common styles
 const styles = StyleSheet.create({
   container: {
+    flex: 1, // This allows the SafeAreaView to fill the screen
+    justifyContent: "center", // Center the inner container vertically
+    alignItems: "center", // Center the inner container horizontally
+  },
+  innerContainer: {
+    width: "100%", // Ensure the inner container is full width
     padding: 20,
     alignItems: "center",
   },
@@ -125,7 +134,7 @@ const styles = StyleSheet.create({
 // Light theme styles
 const lightStyles = StyleSheet.create({
   container: {
-    backgroundColor: "#ffffff", // Light background
+    backgroundColor: "#ffffff",
   },
   input: {
     borderColor: "gray",
@@ -151,7 +160,7 @@ const lightStyles = StyleSheet.create({
 // Dark theme styles
 const darkStyles = StyleSheet.create({
   container: {
-    backgroundColor: "#333333", // Dark background
+    backgroundColor: "#333333",
   },
   input: {
     borderColor: "lightgray",
