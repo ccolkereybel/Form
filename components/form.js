@@ -9,6 +9,8 @@ import {
   Image,
   useColorScheme,
   SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import logo from "@/assets/images/logo.jpg";
@@ -31,7 +33,11 @@ function MyForm() {
 
   return (
     <SafeAreaView style={[styles.container, dynamicStyles.container]}>
-      <View style={styles.innerContainer}>
+      <KeyboardAvoidingView
+        style={styles.innerContainer}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} // Adjust offset as necessary
+      >
         <View>
           <Image source={logo} style={styles.image} />
         </View>
@@ -86,7 +92,7 @@ function MyForm() {
         >
           <Text style={dynamicStyles.text}>Submit</Text>
         </TouchableOpacity>
-      </View>
+      </KeyboardAvoidingView>
     </SafeAreaView>
   );
 }
