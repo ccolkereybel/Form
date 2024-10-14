@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
-import DraggableFlatList from "react-native-draggable-flatlist"; // Ensure this package is installed
+import DraggableFlatList from "react-native-draggable-flatlist"; 
 
 function MyResults() {
   const { submittedData, setSubmittedData } = useFormData();
@@ -60,7 +60,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   item: {
-    backgroundColor: '#f9c2ff',
+    backgroundColor: 'gray',
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
