@@ -36,9 +36,9 @@ function MyForm() {
       <KeyboardAvoidingView
         style={styles.innerContainer}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 100 : 0} // Adjust offset as necessary
+        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0} // Adjusted offset for better visibility
       >
-        <View>
+        <View style={styles.imageContainer}>
           <Image source={logo} style={styles.image} />
         </View>
         <Controller
@@ -108,12 +108,15 @@ const styles = StyleSheet.create({
     width: "100%", // Ensure the inner container is full width
     padding: 20,
     alignItems: "center",
+    justifyContent: "flex-start", // Align items at the top
+  },
+  imageContainer: {
+    marginBottom: 20, // Adjust margin to create space below the image
+    marginTop: -100, // Adjusted margin to move the image closer to the top
   },
   image: {
     width: 250,
     height: 250,
-    marginBottom: 20,
-    marginTop: 40,
   },
   input: {
     borderWidth: 1,
