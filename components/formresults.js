@@ -73,6 +73,7 @@ function MyResults() {
                             setNewData({ ...newData, name: text })
                           }
                           placeholder="Edit Name"
+                          multiline={true} // Allow text to wrap
                         />
                         <TextInput
                           style={styles.input}
@@ -81,6 +82,7 @@ function MyResults() {
                             setNewData({ ...newData, email: text })
                           }
                           placeholder="Edit Email"
+                          multiline={true} // Allow text to wrap
                         />
                         <TouchableOpacity
                           style={styles.saveButton}
@@ -92,7 +94,7 @@ function MyResults() {
                     ) : (
                       // Display the item normally if not in edit mode
                       <View style={styles.row}>
-                        <View>
+                        <View style={styles.textContainer}>
                           <Text>Name: {item.name}</Text>
                           <Text>Email: {item.email}</Text>
                         </View>
@@ -124,6 +126,12 @@ function MyResults() {
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+  innerContainer: {
+    flex: 1,
+  },
   submittedContainer: {
     padding: 20,
   },
@@ -147,6 +155,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-between",
     alignItems: "center",
+  },
+  textContainer: {
+    flex: 1,
+    marginRight: 10, // Add space between text and buttons
   },
   buttonsContainer: {
     flexDirection: "row",
@@ -181,7 +193,9 @@ const styles = StyleSheet.create({
     borderColor: "#ccc",
     borderWidth: 1,
     marginRight: 10,
-    flex: 1,
+    flexGrow: 1,
+    maxWidth: "70%", // Ensures the input doesn't take up too much space
+    flexShrink: 1, // Allows the input to shrink when necessary
   },
   saveButton: {
     backgroundColor: "#007BFF",
