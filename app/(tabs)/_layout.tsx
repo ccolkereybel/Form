@@ -75,7 +75,7 @@ export default function TabLayout() {
                 title: "Results",
                 tabBarIcon: ({ color, focused }) => (
                   <TabBarIcon
-                    name={focused ? "code-slash" : "code-slash-outline"}
+                    name={focused ? "people" : "people-outline"}
                     color={color}
                   />
                 ),
