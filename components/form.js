@@ -106,6 +106,7 @@ function MyForm() {
 
 const styles = StyleSheet.create({
   scrollContainer: {
+    height: '100%',
     flex: 1, 
   },
   contentContainer: {

@@ -2,14 +2,17 @@
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
+import { ScrollView } from "react-native-gesture-handler";
 
 
 export default function HomeScreen() {
   return (
     <>
+  <ScrollView>
     <SafeAreaView> 
       <MyForm />
-      </SafeAreaView>
+    </SafeAreaView>
+  </ScrollView>
     </>
   );
 }
