@@ -1,5 +1,5 @@
-// index.tsx
 import React from "react";
+
 import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
 import {

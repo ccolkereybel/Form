@@ -1,11 +1,25 @@
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Image, ScrollView } from "react-native";
+
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  StyleSheet,
+  Image,
+  useColorScheme,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
+
 import { useFormData } from "@/components/FormDataContext.js";
 import Icon from 'react-native-vector-icons/Ionicons';
 import logo from "@/assets/images/banner1.jpg";
 
 function MyForm() {
+  const colorScheme = useColorScheme();
   const { setSubmittedData } = useFormData();
   const {
     control,
@@ -78,11 +92,7 @@ function MyForm() {
   };
 
   return (
-    <ScrollView
-      style={styles.scrollContainer}
-      contentContainerStyle={styles.contentContainer}
-      showsVerticalScrollIndicator={false}
-    >
+ 
       <View style={styles.innerContainer}>
         <Image source={logo} style={styles.image} />
 
@@ -100,10 +110,77 @@ function MyForm() {
           <Text style={styles.text}>Submit</Text>
         </TouchableOpacity>
       </View>
-    </ScrollView>
+   
+  // Dynamic styles based on color scheme
+  const dynamicStyles = colorScheme === "dark" ? darkStyles : lightStyles;
+
+  return (
+    <SafeAreaView style={[styles.container, dynamicStyles.container]}>
+      <KeyboardAvoidingView
+        style={styles.innerContainer}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+      >
+        <View style={styles.imageContainer}>
+          <Image source={logo} style={styles.image} />
+        </View>
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={[styles.input, dynamicStyles.input]}
+              placeholder="Your Name"
+              placeholderTextColor={dynamicStyles.placeholder.color}
+            />
+          )}
+          name="name"
+          defaultValue=""
+          rules={{ required: "You must enter your name" }}
+        />
+        {errors.name && (
+          <Text style={dynamicStyles.errorText}>{errors.name.message}</Text>
+        )}
+
+        <Controller
+          control={control}
+          render={({ field: { onChange, onBlur, value } }) => (
+            <TextInput
+              onBlur={onBlur}
+              onChangeText={onChange}
+              value={value}
+              style={[styles.input, dynamicStyles.input]}
+              placeholder="Email"
+              placeholderTextColor={dynamicStyles.placeholder.color}
+            />
+          )}
+          name="email"
+          defaultValue=""
+          rules={{
+            required: "You must enter your email",
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: "Enter a valid email address",
+            },
+          }}
+        />
+        {errors.email && (
+          <Text style={dynamicStyles.errorText}>{errors.email.message}</Text>
+        )}
+        <TouchableOpacity
+          style={[styles.button, dynamicStyles.button]}
+          onPress={handleSubmit(onSubmit)}
+        >
+          <Text style={dynamicStyles.text}>Submit</Text>
+        </TouchableOpacity>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
+// Common styles
 const styles = StyleSheet.create({
   scrollContainer: {
     height: '100%',
@@ -172,9 +249,33 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     letterSpacing: 0.25,
     color: "white",
+
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  innerContainer: {
+    width: "100%",
+    padding: 20,
+    alignItems: "center",
+    justifyContent: "flex-start",
+  },
+  imageContainer: {
+    marginBottom: 20,
+    marginTop: -100,
+  },
+  image: {
+    width: 250,
+    height: 250,
+  },
+  input: {
+    borderWidth: 1,
+    padding: 10,
+    marginBottom: 10,
+    width: "80%",
   },
   button: {
-    backgroundColor: "#004f71",
     paddingVertical: 12,
     alignItems: "center",
     justifyContent: "center",
@@ -187,6 +288,59 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 5, height: 5 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
+  },
+});
+
+// Light theme styles
+const lightStyles = StyleSheet.create({
+  container: {
+    backgroundColor: "#ffffff",
+  },
+  input: {
+    borderColor: "gray",
+  },
+  errorText: {
+    color: "red",
+  },
+  button: {
+    backgroundColor: "#004f71",
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
+  placeholder: {
+    color: "gray",
+  },
+});
+
+// Dark theme styles
+const darkStyles = StyleSheet.create({
+  container: {
+    backgroundColor: "#333333",
+  },
+  input: {
+    borderColor: "lightgray",
+    color: "white", // Input text color for dark theme
+  },
+  errorText: {
+    color: "lightcoral", // Error text color for dark theme
+  },
+  button: {
+    backgroundColor: "#005f8a", // Button color for dark theme
+  },
+  text: {
+    fontSize: 16,
+    lineHeight: 21,
+    fontWeight: "bold",
+    letterSpacing: 0.25,
+    color: "white",
+  },
+  placeholder: {
+    color: "lightgray", // Placeholder color for dark theme
   },
 });
 
