@@ -164,7 +164,7 @@ const styles = (isDarkMode) =>
       flex: 1,
     },
     image: {
-      width: "80%",
+      width: "72%",
       height: 200,
       resizeMode: "contain",
       alignSelf: "center",

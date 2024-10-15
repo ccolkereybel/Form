@@ -9,6 +9,9 @@ import {
   Image,
   ScrollView,
   useColorScheme,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import Icon from "react-native-vector-icons/Ionicons";
