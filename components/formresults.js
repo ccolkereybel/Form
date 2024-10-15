@@ -1,19 +1,40 @@
-import React from "react";
-import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
+import React, { useState } from "react";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TouchableOpacity,
+  TextInput,
+} from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import DraggableFlatList from "react-native-draggable-flatlist";
 
 function MyResults() {
   const { submittedData, setSubmittedData } = useFormData();
+  const [editingItem, setEditingItem] = useState(null); // Track the item being edited
+  const [newData, setNewData] = useState({ name: "", email: "" }); // Temporary storage for edited data
 
   const handleDragEnd = ({ data }) => {
     setSubmittedData(data); // Update the submittedData with the new order
   };
 
   const handleDelete = (email) => {
-    // Filter out the item with the matching email
     const updatedData = submittedData.filter((item) => item.email !== email);
-    setSubmittedData(updatedData); // Update the submittedData with the filtered data
+    setSubmittedData(updatedData);
+  };
+
+  const handleEdit = (item) => {
+    setEditingItem(item.email); // Set the current item as editable
+    setNewData({ name: item.name, email: item.email }); // Pre-fill the input fields with current data
+  };
+
+  const handleSave = () => {
+    // Update the submittedData array with the new edited data
+    const updatedData = submittedData.map((item) =>
+      item.email === editingItem ? newData : item
+    );
+    setSubmittedData(updatedData);
+    setEditingItem(null); // Reset the editing state
   };
 
   return (
@@ -26,25 +47,62 @@ function MyResults() {
         <DraggableFlatList
           data={submittedData}
           onDragEnd={handleDragEnd}
-          // Use a unique property for the key extractor, assuming items have a unique `email` property
-          keyExtractor={(item) => `${item.name}-${item.email}`} // Ensure the id is a string
+          keyExtractor={(item) => `${item.name}-${item.email}`}
           renderItem={({ item, drag, isActive }) => (
             <TouchableOpacity
               style={[{ opacity: isActive ? 0.5 : 1 }]}
-              onLongPress={drag} // Enable dragging on long press
+              onLongPress={drag}
             >
               <View style={styles.item}>
-                <View>
-                  <Text>Name: {item.name}</Text>
-                  <Text>Email: {item.email}</Text>
-                </View>
-                {/* Styled Delete Button */}
-                <TouchableOpacity
-                  style={styles.deleteButton}
-                  onPress={() => handleDelete(item.email)} // Delete the item when pressed
-                >
-                  <Text style={styles.deleteButtonText}>Delete</Text>
-                </TouchableOpacity>
+                {editingItem === item.email ? (
+                  // Show editable input fields if this item is being edited
+                  <View style={styles.editContainer}>
+                    <TextInput
+                      style={styles.input}
+                      value={newData.name}
+                      onChangeText={(text) =>
+                        setNewData({ ...newData, name: text })
+                      }
+                      placeholder="Edit Name"
+                    />
+                    <TextInput
+                      style={styles.input}
+                      value={newData.email}
+                      onChangeText={(text) =>
+                        setNewData({ ...newData, email: text })
+                      }
+                      placeholder="Edit Email"
+                    />
+                    <TouchableOpacity
+                      style={styles.saveButton}
+                      onPress={handleSave}
+                    >
+                      <Text style={styles.saveButtonText}>Save</Text>
+                    </TouchableOpacity>
+                  </View>
+                ) : (
+                  // Display the item normally if not in edit mode
+                  <View style={styles.row}>
+                    <View>
+                      <Text>Name: {item.name}</Text>
+                      <Text>Email: {item.email}</Text>
+                    </View>
+                    <View style={styles.buttonsContainer}>
+                      <TouchableOpacity
+                        style={styles.editButton}
+                        onPress={() => handleEdit(item)}
+                      >
+                        <Text style={styles.buttonText}>Edit</Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.deleteButton}
+                        onPress={() => handleDelete(item.email)}
+                      >
+                        <Text style={styles.buttonText}>Delete</Text>
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                )}
               </View>
             </TouchableOpacity>
           )}
@@ -63,33 +121,65 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     fontWeight: "bold",
   },
-  clearButton: {
-    backgroundColor: "#ff6666",
-    padding: 10,
-    borderRadius: 5,
-    marginBottom: 10,
-  },
-  buttonText: {
-    color: "#fff",
-    textAlign: "center",
-    fontWeight: "bold",
-  },
   item: {
-    backgroundColor: "gray",
-    padding: 20,
+    backgroundColor: "#f9f9f9",
+    padding: 15,
     marginVertical: 8,
     marginHorizontal: 16,
-    flexDirection: "row", // To align delete button and text horizontally
-    justifyContent: "space-between", // Space between text and delete button
-    alignItems: "center", // Center the delete button vertically
+    borderRadius: 8,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 2,
+  },
+  row: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  buttonsContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  editButton: {
+    backgroundColor: "#4CAF50",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+    marginRight: 10,
   },
   deleteButton: {
     backgroundColor: "#ff3333",
     paddingVertical: 8,
-    paddingHorizontal: 15,
+    paddingHorizontal: 12,
     borderRadius: 5,
   },
-  deleteButtonText: {
+  buttonText: {
+    color: "#fff",
+    fontWeight: "bold",
+  },
+  editContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+  },
+  input: {
+    backgroundColor: "#fff",
+    padding: 10,
+    borderRadius: 5,
+    borderColor: "#ccc",
+    borderWidth: 1,
+    marginRight: 10,
+    flex: 1,
+  },
+  saveButton: {
+    backgroundColor: "#007BFF",
+    paddingVertical: 8,
+    paddingHorizontal: 12,
+    borderRadius: 5,
+  },
+  saveButtonText: {
     color: "#fff",
     fontWeight: "bold",
   },

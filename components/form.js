@@ -36,7 +36,7 @@ function MyForm() {
       <KeyboardAvoidingView
         style={styles.innerContainer}
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0} // Adjusted offset for better visibility
+        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
       >
         <View style={styles.imageContainer}>
           <Image source={logo} style={styles.image} />
@@ -50,7 +50,7 @@ function MyForm() {
               value={value}
               style={[styles.input, dynamicStyles.input]}
               placeholder="Your Name"
-              placeholderTextColor={dynamicStyles.placeholder.color} // Change placeholder color based on theme
+              placeholderTextColor={dynamicStyles.placeholder.color}
             />
           )}
           name="name"
@@ -70,7 +70,7 @@ function MyForm() {
               value={value}
               style={[styles.input, dynamicStyles.input]}
               placeholder="Email"
-              placeholderTextColor={dynamicStyles.placeholder.color} // Change placeholder color based on theme
+              placeholderTextColor={dynamicStyles.placeholder.color}
             />
           )}
           name="email"
@@ -100,19 +100,19 @@ function MyForm() {
 // Common styles
 const styles = StyleSheet.create({
   container: {
-    flex: 1, // This allows the SafeAreaView to fill the screen
-    justifyContent: "center", // Center the inner container vertically
-    alignItems: "center", // Center the inner container horizontally
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
   },
   innerContainer: {
-    width: "100%", // Ensure the inner container is full width
+    width: "100%",
     padding: 20,
     alignItems: "center",
-    justifyContent: "flex-start", // Align items at the top
+    justifyContent: "flex-start",
   },
   imageContainer: {
-    marginBottom: 20, // Adjust margin to create space below the image
-    marginTop: -100, // Adjusted margin to move the image closer to the top
+    marginBottom: 20,
+    marginTop: -100,
   },
   image: {
     width: 250,
@@ -152,7 +152,7 @@ const lightStyles = StyleSheet.create({
     color: "red",
   },
   button: {
-    backgroundColor: "#004f71", // Button color for light theme
+    backgroundColor: "#004f71",
   },
   text: {
     fontSize: 16,
@@ -162,7 +162,7 @@ const lightStyles = StyleSheet.create({
     color: "white",
   },
   placeholder: {
-    color: "gray", // Placeholder color for light theme
+    color: "gray",
   },
 });
 
