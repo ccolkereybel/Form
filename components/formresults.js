@@ -66,10 +66,6 @@ function MyResults() {
           </View>
 
           <View style={styles(isDarkMode).submittedContainer}>
-            <Text style={styles(isDarkMode).submittedTitle}>
-              Submitted Data:
-            </Text>
-
             {submittedData.length === 0 ? (
               <Text>No data submitted yet.</Text>
             ) : (
