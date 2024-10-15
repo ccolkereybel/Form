@@ -63,7 +63,7 @@ function MyForm() {
               rules={{
                 required: "Phone number is required",
                 pattern: {
-                  value: /^[0-9]{10}$/, // Only allows 10-digit phone numbers
+                  value: /^[0-9]{10}$/,
                   message: "Enter a valid phone number (10 digits)",
                 },
               }}
@@ -78,8 +78,12 @@ function MyForm() {
   };
 
   return (
-    <ScrollView style={styles.scrollContainer} contentContainerStyle={styles.contentContainer}>
-      <View style={styles.container}>
+    <ScrollView
+      style={styles.scrollContainer}
+      contentContainerStyle={styles.contentContainer}
+      showsVerticalScrollIndicator={false}
+    >
+      <View style={styles.innerContainer}>
         <Image source={logo} style={styles.image} />
 
         {/* Contact Information Header */}
@@ -91,6 +95,7 @@ function MyForm() {
         {/* Render fields for 4 contacts */}
         {[...Array(4)].map((_, index) => renderContactFields(index))}
 
+        {/* Submit Button */}
         <TouchableOpacity style={styles.button} onPress={handleSubmit(onSubmit)}>
           <Text style={styles.text}>Submit</Text>
         </TouchableOpacity>
@@ -101,22 +106,22 @@ function MyForm() {
 
 const styles = StyleSheet.create({
   scrollContainer: {
-    flex: 1, // Ensure the scroll view takes up the full height
+    flex: 1, 
   },
   contentContainer: {
-    paddingBottom: 20, // Allow some space at the bottom for scrolling
-    flexGrow: 1, // Ensure content can grow
-    flexDirection: 'column', // Stack content vertically
+    paddingBottom: 30,
+    paddingHorizontal: 20, 
   },
-  container: {
-    padding: 100,
-    alignItems: "center",
+  innerContainer: {
+    width: '100%',
+    alignItems: "center", 
   },
   image: {
-    width: '100%',
-    height: 200, // Reduce height to avoid cut-off
-    resizeMode: 'contain', // Makes the image fit within its bounds
-    marginBottom: 50,
+    width: '80%', 
+    height: 200, 
+    resizeMode: 'contain', 
+    alignSelf: 'center', 
+    marginBottom: 30,
     marginTop: 20,
   },
   header: {
@@ -136,29 +141,29 @@ const styles = StyleSheet.create({
     color: "#004f71",
   },
   inputRow: {
-    flexDirection: "row", // Align items in a row
-    justifyContent: "space-between", // Space between the two inputs
-    width: "100%", // Full width of the container
-    marginBottom: 15, // Space between rows
+    flexDirection: "row", 
+    justifyContent: "space-between", 
+    width: "100%", 
+    marginBottom: 15, 
   },
   inputWrapper: {
-    width: "48%", // Half width for each input
+    width: "48%", 
   },
   input: {
     borderWidth: 1,
     borderColor: "gray",
-    padding: 10,
-    marginBottom: 5, // Space between the input and error text
-    width: "100%", // Ensure input takes full width within wrapper
+    padding: 10, 
+    marginBottom: 5, 
+    width: "100%",
   },
   contactContainer: {
-    marginBottom: 40,
+    marginBottom: 30, 
     width: "100%",
   },
   errorText: {
     color: "red",
     fontSize: 12,
-    marginBottom: 10, // Space between error text and the next component
+    marginBottom: 10, 
   },
   text: {
     fontSize: 16,
@@ -175,7 +180,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 32,
     borderRadius: 4,
     elevation: 5,
-    width: "50%",
+    width: "60%",
     marginTop: 25,
     shadowColor: "#000",
     shadowOffset: { width: 5, height: 5 },
