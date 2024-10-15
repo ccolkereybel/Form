@@ -2,22 +2,30 @@
 import React from "react";
 import { StyleSheet, SafeAreaView } from "react-native";
 import MyForm from "@/components/form";
-import { ScrollView } from "react-native-gesture-handler";
-
+import {
+  ScrollView,
+  GestureHandlerRootView,
+} from "react-native-gesture-handler";
 
 export default function HomeScreen() {
   return (
     <>
-  <ScrollView>
-    <SafeAreaView> 
-      <MyForm />
-    </SafeAreaView>
-  </ScrollView>
+      <GestureHandlerRootView style={styles.container}>
+        <ScrollView>
+          <SafeAreaView>
+            <MyForm />
+          </SafeAreaView>
+        </ScrollView>
+      </GestureHandlerRootView>
     </>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+
   titleContainer: {
     flexDirection: "row",
     alignItems: "center",
