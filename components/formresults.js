@@ -5,6 +5,9 @@ import {
   StyleSheet,
   TouchableOpacity,
   TextInput,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { useFormData } from "@/components/FormDataContext.js";
 import DraggableFlatList from "react-native-draggable-flatlist";
@@ -38,77 +41,85 @@ function MyResults() {
   };
 
   return (
-    <View style={styles.submittedContainer}>
-      <Text style={styles.submittedTitle}>Submitted Data:</Text>
+    <SafeAreaView style={styles.container}>
+      <KeyboardAvoidingView
+        style={styles.innerContainer}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+        keyboardVerticalOffset={Platform.OS === "ios" ? 80 : 0}
+      >
+        <View style={styles.submittedContainer}>
+          <Text style={styles.submittedTitle}>Submitted Data:</Text>
 
-      {submittedData.length === 0 ? (
-        <Text>No data submitted yet.</Text>
-      ) : (
-        <DraggableFlatList
-          data={submittedData}
-          onDragEnd={handleDragEnd}
-          keyExtractor={(item) => `${item.name}-${item.email}`}
-          renderItem={({ item, drag, isActive }) => (
-            <TouchableOpacity
-              style={[{ opacity: isActive ? 0.5 : 1 }]}
-              onLongPress={drag}
-            >
-              <View style={styles.item}>
-                {editingItem === item.email ? (
-                  // Show editable input fields if this item is being edited
-                  <View style={styles.editContainer}>
-                    <TextInput
-                      style={styles.input}
-                      value={newData.name}
-                      onChangeText={(text) =>
-                        setNewData({ ...newData, name: text })
-                      }
-                      placeholder="Edit Name"
-                    />
-                    <TextInput
-                      style={styles.input}
-                      value={newData.email}
-                      onChangeText={(text) =>
-                        setNewData({ ...newData, email: text })
-                      }
-                      placeholder="Edit Email"
-                    />
-                    <TouchableOpacity
-                      style={styles.saveButton}
-                      onPress={handleSave}
-                    >
-                      <Text style={styles.saveButtonText}>Save</Text>
-                    </TouchableOpacity>
+          {submittedData.length === 0 ? (
+            <Text>No data submitted yet.</Text>
+          ) : (
+            <DraggableFlatList
+              data={submittedData}
+              onDragEnd={handleDragEnd}
+              keyExtractor={(item) => `${item.name}-${item.email}`}
+              renderItem={({ item, drag, isActive }) => (
+                <TouchableOpacity
+                  style={[{ opacity: isActive ? 0.5 : 1 }]}
+                  onLongPress={drag}
+                >
+                  <View style={styles.item}>
+                    {editingItem === item.email ? (
+                      // Show editable input fields if this item is being edited
+                      <View style={styles.editContainer}>
+                        <TextInput
+                          style={styles.input}
+                          value={newData.name}
+                          onChangeText={(text) =>
+                            setNewData({ ...newData, name: text })
+                          }
+                          placeholder="Edit Name"
+                        />
+                        <TextInput
+                          style={styles.input}
+                          value={newData.email}
+                          onChangeText={(text) =>
+                            setNewData({ ...newData, email: text })
+                          }
+                          placeholder="Edit Email"
+                        />
+                        <TouchableOpacity
+                          style={styles.saveButton}
+                          onPress={handleSave}
+                        >
+                          <Text style={styles.saveButtonText}>Save</Text>
+                        </TouchableOpacity>
+                      </View>
+                    ) : (
+                      // Display the item normally if not in edit mode
+                      <View style={styles.row}>
+                        <View>
+                          <Text>Name: {item.name}</Text>
+                          <Text>Email: {item.email}</Text>
+                        </View>
+                        <View style={styles.buttonsContainer}>
+                          <TouchableOpacity
+                            style={styles.editButton}
+                            onPress={() => handleEdit(item)}
+                          >
+                            <Text style={styles.buttonText}>Edit</Text>
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            style={styles.deleteButton}
+                            onPress={() => handleDelete(item.email)}
+                          >
+                            <Text style={styles.buttonText}>Delete</Text>
+                          </TouchableOpacity>
+                        </View>
+                      </View>
+                    )}
                   </View>
-                ) : (
-                  // Display the item normally if not in edit mode
-                  <View style={styles.row}>
-                    <View>
-                      <Text>Name: {item.name}</Text>
-                      <Text>Email: {item.email}</Text>
-                    </View>
-                    <View style={styles.buttonsContainer}>
-                      <TouchableOpacity
-                        style={styles.editButton}
-                        onPress={() => handleEdit(item)}
-                      >
-                        <Text style={styles.buttonText}>Edit</Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.deleteButton}
-                        onPress={() => handleDelete(item.email)}
-                      >
-                        <Text style={styles.buttonText}>Delete</Text>
-                      </TouchableOpacity>
-                    </View>
-                  </View>
-                )}
-              </View>
-            </TouchableOpacity>
+                </TouchableOpacity>
+              )}
+            />
           )}
-        />
-      )}
-    </View>
+        </View>
+      </KeyboardAvoidingView>
+    </SafeAreaView>
   );
 }
 
@@ -125,7 +136,6 @@ const styles = StyleSheet.create({
     backgroundColor: "#f9f9f9",
     padding: 15,
     marginVertical: 8,
-    marginHorizontal: 16,
     borderRadius: 8,
     shadowColor: "#000",
     shadowOffset: { width: 0, height: 2 },
