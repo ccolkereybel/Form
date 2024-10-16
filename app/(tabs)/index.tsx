@@ -1,6 +1,10 @@
 import React from "react";
-
-import { StyleSheet, SafeAreaView } from "react-native";
+import {
+  StyleSheet,
+  SafeAreaView,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import MyForm from "@/components/form";
 import {
   ScrollView,
@@ -9,15 +13,18 @@ import {
 
 export default function HomeScreen() {
   return (
-    <>
-      <GestureHandlerRootView style={styles.container}>
+    <GestureHandlerRootView style={styles.container}>
+      <KeyboardAvoidingView
+        style={{ flex: 1 }}
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
+      >
         <ScrollView>
           <SafeAreaView>
             <MyForm />
           </SafeAreaView>
         </ScrollView>
-      </GestureHandlerRootView>
-    </>
+      </KeyboardAvoidingView>
+    </GestureHandlerRootView>
   );
 }
 
@@ -34,12 +41,5 @@ const styles = StyleSheet.create({
   stepContainer: {
     gap: 8,
     marginBottom: 8,
-  },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
   },
 });
